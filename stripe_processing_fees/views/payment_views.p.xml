@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="account_invoice_stripe_processing_fee_form">
+            <field name="name">account.payment.stripe.processing.fee</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="move_id" position="after">
+                    <!-- #if VERSION >= "17.0" -->
+                    <field name="fee_move_id" required="0" invisible="not id" groups="account.group_account_readonly"/>
+                    <!-- #elif VERSION <= "16.0" -->
+                    <field name="fee_move_id" required="0" attrs="{'invisible': [('id', '=', False)]}" groups="account.group_account_readonly"/>
+                    <!-- #endif -->
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
