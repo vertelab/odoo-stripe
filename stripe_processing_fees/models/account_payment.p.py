@@ -34,9 +34,15 @@ class AccountPayment(models.Model):
 
     def _retrieve_balance_transaction_from_charges(self):
         payment_transaction_id = self.payment_transaction_id
+        # #if VERSION <=  "14.0"
         resp = payment_transaction_id.acquirer_id._stripe_request(
             f'charges/{payment_transaction_id.acquirer_reference}'
         )
+        # # else
+        resp = payment_transaction_id.acquirer_id._stripe_make_request(
+            f'charges/{payment_transaction_id.acquirer_reference}'
+        )
+        # # endif
         if resp.get('balance_transaction'):
             return resp.get('balance_transaction')
         return False
@@ -46,7 +52,12 @@ class AccountPayment(models.Model):
         acquirer_id = self.payment_transaction_id.acquirer_id
         if not balance_transaction:
             return False
+
+        # #if VERSION <=  "14.0"
         resp = acquirer_id._stripe_request(f'balance_transactions/{balance_transaction}', method='GET')
+        # # else
+        resp = acquirer_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
+        # # endif
         if resp.get('fee'):
             return resp.get('fee')
         return False
