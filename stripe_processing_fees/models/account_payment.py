@@ -34,7 +34,7 @@ class AccountPayment(models.Model):
 
     def _retrieve_balance_transaction_from_charges(self):
         payment_transaction_id = self.payment_transaction_id
-        resp = payment_transaction_id.acquirer_id._stripe_request(
+        resp = payment_transaction_id.acquirer_id._stripe_make_request(
             f'charges/{payment_transaction_id.acquirer_reference}'
         )
         if resp.get('balance_transaction'):
@@ -46,7 +46,8 @@ class AccountPayment(models.Model):
         acquirer_id = self.payment_transaction_id.acquirer_id
         if not balance_transaction:
             return False
-        resp = acquirer_id._stripe_request(f'balance_transactions/{balance_transaction}', method='GET')
+
+        resp = acquirer_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
         if resp.get('fee'):
             return resp.get('fee')
         return False
