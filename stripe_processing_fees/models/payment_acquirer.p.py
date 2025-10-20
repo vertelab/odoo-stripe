@@ -3,7 +3,11 @@ from odoo import models, fields
 
 
 class PaymentAcquirerStripe(models.Model):
+    # #if VERSION <=  "17.0"
     _inherit = 'payment.acquirer'
+    # # else
+    _inherit = 'payment.provider'
+    # # endif
 
     def _handle_stripe_webhook(self, data):
         wh_type = data.get('type')
