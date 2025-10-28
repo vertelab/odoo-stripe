@@ -34,20 +34,19 @@ class AccountPayment(models.Model):
 
     def _retrieve_balance_transaction_from_charges(self):
         payment_transaction_id = self.payment_transaction_id
-        resp = payment_transaction_id.acquirer_id._stripe_make_request(
-            f'charges/{payment_transaction_id.acquirer_reference}'
+        resp = payment_transaction_id.provider_id._stripe_make_request(
+            f'payment_intents/{payment_transaction_id.provider_reference}'
         )
-        if resp.get('balance_transaction'):
-            return resp.get('balance_transaction')
+        balance_transaction_id = resp.get("charges", {}).get("data", [{}])[0].get("balance_transaction")
+        if balance_transaction_id:
+            return balance_transaction_id
         return False
 
 
-    def _get_processing_fee(self, balance_transaction):
-        acquirer_id = self.payment_transaction_id.acquirer_id
+    def _get_processing_fee(self, balance_transaction):        
         if not balance_transaction:
             return False
-
-        resp = acquirer_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
+        resp = self.payment_transaction_id.provider_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
         if resp.get('fee'):
             return resp.get('fee')
         return False
