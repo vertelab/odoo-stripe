@@ -38,25 +38,35 @@ class AccountPayment(models.Model):
         resp = payment_transaction_id.acquirer_id._stripe_request(
             f'charges/{payment_transaction_id.acquirer_reference}'
         )
-        # # else
+        # # elif VERSION <=  "17.0"
         resp = payment_transaction_id.acquirer_id._stripe_make_request(
             f'charges/{payment_transaction_id.acquirer_reference}'
         )
+        # # elif VERSION >=  "18.0"
+        resp = payment_transaction_id.provider_id._stripe_make_request(
+            f'payment_intents/{payment_transaction_id.provider_reference}'
+        )
+        balance_transaction_id = resp.get("charges", {}).get("data", [{}])[0].get("balance_transaction")
         # # endif
+        # # if VERSION <=  "17.0"
         if resp.get('balance_transaction'):
             return resp.get('balance_transaction')
+        # # elif VERSION <=  "18.0"
+        if balance_transaction_id:
+            return balance_transaction_id
+        # # endif
         return False
 
 
-    def _get_processing_fee(self, balance_transaction):
-        acquirer_id = self.payment_transaction_id.acquirer_id
+    def _get_processing_fee(self, balance_transaction):        
         if not balance_transaction:
             return False
-
         # #if VERSION <=  "14.0"
-        resp = acquirer_id._stripe_request(f'balance_transactions/{balance_transaction}', method='GET')
-        # # else
-        resp = acquirer_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
+        resp = self.payment_transaction_id.acquirer_id._stripe_request(f'balance_transactions/{balance_transaction}', method='GET')
+        # #  elif VERSION <=  "17.0"
+        resp = self.payment_transaction_id.acquirer_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
+        # #  elif VERSION >=  "18.0"
+        resp = self.payment_transaction_id.provider_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
         # # endif
         if resp.get('fee'):
             return resp.get('fee')

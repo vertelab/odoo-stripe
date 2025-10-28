@@ -16,6 +16,7 @@
                     <field name="fee_move_id" required="0" attrs="{'invisible': [('id', '=', False)]}" groups="account.group_account_readonly"/>
                     <!-- #elif VERSION >= "17.0" -->
                     <field name="fee_move_id" required="0" invisible="not id" groups="account.group_account_readonly"/>
+                     <!-- #endif -->
                 </field>
                 <!-- #endif -->
             </field>
