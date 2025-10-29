@@ -38,5 +38,23 @@ class PaymentAcquirerStripe(models.Model):
                 'currency_id': currency_id.id,
             })],
         })
+        
+        bank_transfer_amount = checkout_object.get('application_fee_amount') / 100 if checkout_object.get('application_fee_amount') else False
+        
+        if bank_transfer_amount:
+            bank_stmt = self.env['account.bank.statement'].sudo().create({
+            'journal_id': bank_journal_id.id,
+            'date': fields.Date.today(),
+            'line_ids': [(0, 0, {
+                'payment_ref': tx_reference,
+                'ref': tx_reference,
+                'transaction_type': description,
+                'narration': f"Bank transfer fee {description} - {balance_transaction}",
+                'account_number': account_number_id,
+                'amount': bank_transfer_amount,
+                'currency_id': currency_id.id,
+            })],
+        })
+        
         bank_stmt.button_post()
         return True
