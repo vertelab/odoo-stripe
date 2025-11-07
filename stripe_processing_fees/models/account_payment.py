@@ -65,10 +65,8 @@ class AccountPayment(models.Model):
         return False
 
 
-    def _get_balance_transaction(self, balance_transaction):
+    def _get_processing_fee(self, balance_transaction):        
         if not balance_transaction:
             return False
-        resp = self.payment_transaction_id.provider_id._stripe_make_request(
-            f'balance_transactions/{balance_transaction}', method='GET'
-        )
+        resp = self.payment_transaction_id.provider_id._stripe_make_request(f'balance_transactions/{balance_transaction}', method='GET')
         return resp
