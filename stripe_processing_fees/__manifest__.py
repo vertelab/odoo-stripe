@@ -7,7 +7,7 @@
     'summary': 'Payment Acquirer: Stripe Processing Fee',
     'version': '1.0',
     'description': """Stripe Processing Fee""",
-    'depends': ['payment_stripe', 'payment', 'account'],
+    'depends': ['payment_stripe', 'payment', 'account', 'account_payment'],
     'data': [
         'views/payment_views.xml',
     ],
