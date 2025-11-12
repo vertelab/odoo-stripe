@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stripe_processing_fees
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0-20251110\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-12 10:57+0000\n"
+"PO-Revision-Date: 2025-11-12 13:20+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: stripe_processing_fees
+#: model:ir.model.fields,field_description:stripe_processing_fees.field_payment_provider__bank_journal_id
+msgid "Bank Journal"
+msgstr "Bankverifikat"
+
+#. module: stripe_processing_fees
+#: model:ir.model.fields,field_description:stripe_processing_fees.field_account_payment__fee_move_id
+msgid "Fee Entry"
+msgstr "Avgiftsinträde"
+
+#. module: stripe_processing_fees
+#: model:ir.model,name:stripe_processing_fees.model_payment_provider
+msgid "Payment Provider"
+msgstr "Betalningsleverantör"
+
+#. module: stripe_processing_fees
+#: model:ir.model,name:stripe_processing_fees.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "Betalningstransaktion"
+
+#. module: stripe_processing_fees
+#: model:ir.model,name:stripe_processing_fees.model_account_payment
+msgid "Payments"
+msgstr "Betalningar"
+
+#. module: stripe_processing_fees
+#: model:ir.model.fields,field_description:stripe_processing_fees.field_payment_provider__processing_fee_account_id
+msgid "Processing Fee Account"
+msgstr "Konto för behandlingsavgift"
+
+#. module: stripe_processing_fees
+#: model:ir.model.fields,field_description:stripe_processing_fees.field_payment_provider__receivable_account_id
+msgid "Receivable Account"
+msgstr "Kundfodringskonto"
+
+#. module: stripe_processing_fees
+#: model:ir.model.fields,field_description:stripe_processing_fees.field_payment_provider__stripe_account_id
+msgid "Stripe Account"
+msgstr "Stripekonto"
