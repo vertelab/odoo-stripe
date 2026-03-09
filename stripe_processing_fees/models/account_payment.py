@@ -19,8 +19,8 @@ class AccountPayment(models.Model):
         processing_fee_move_id.action_post()
 
     def _processing_fee_lines(self):
-        balance_transaction = self._get_balance_transaction(self._retrieve_balance_transaction_from_charges())
-
+        balance_transaction = self._get_processing_fee(self._retrieve_balance_transaction_from_charges())
+        
         if not balance_transaction:
             return False
 
