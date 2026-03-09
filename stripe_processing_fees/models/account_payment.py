@@ -20,7 +20,7 @@ class AccountPayment(models.Model):
 
     def _processing_fee_lines(self):
         balance_transaction = self._get_processing_fee(self._retrieve_balance_transaction_from_charges())
-        
+
         if not balance_transaction:
             return False
 
