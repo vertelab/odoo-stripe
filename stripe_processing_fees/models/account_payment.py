@@ -32,12 +32,14 @@ class AccountPayment(models.Model):
                 'account_id': payment_transaction_id.provider_id.receivable_account_id.id,
                 'credit': balance_transaction.get('amount') / 100,
                 'debit': 0.0,
+                'partner_id':self.partner_id.id,
             }),
             (0, 0, {
                 'name': f"{self.payment_transaction_id.reference}",
                 'account_id': payment_transaction_id.provider_id.stripe_account_id.id,
                 'credit': 0.0,
                 'debit': balance_transaction.get('net') / 100,
+                'partner_id':self.partner_id.id,
             }),
         ]
 
@@ -50,6 +52,7 @@ class AccountPayment(models.Model):
                     'account_id': payment_transaction_id.provider_id.processing_fee_account_id.id,
                     'debit': processing_fee_amount,
                     'credit': 0.0,
+                    'partner_id':self.partner_id.id,
                 }),
             )
         return line_ids
