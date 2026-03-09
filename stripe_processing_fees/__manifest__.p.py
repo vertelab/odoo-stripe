@@ -10,6 +10,7 @@
     'depends': ['payment_stripe', 'payment', 'account', 'account_payment'],
     'data': [
         'views/payment_views.xml',
+        'views/payment_provider_views.xml',
     ],
     'installable': True,
     'application': True,
