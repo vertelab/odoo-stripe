@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.view_account_payment_form"/>
             <field name="arch" type="xml">
                 <field name="move_id" position="after">
-                    <field name="fee_move_id" required="0" attrs="{'invisible': [('id', '=', False)]}" groups="account.group_account_readonly"/>
+                    <field name="fee_move_id" required="0" attrs="{'invisible': [('fee_move_id', '=', False)]}" groups="account.group_account_readonly"/>
                 </field>
             </field>
         </record>

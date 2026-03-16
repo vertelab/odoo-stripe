@@ -6,5 +6,4 @@ class PaymentTransactionStripe(models.Model):
 
     def _create_payment(self, add_payment_vals={}):
         payment = super()._create_payment(add_payment_vals=add_payment_vals)
-        payment._process_processing_fee()
         return payment
