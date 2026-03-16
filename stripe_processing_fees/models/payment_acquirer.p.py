@@ -12,7 +12,7 @@ class PaymentAcquirerStripe(models.Model):
     bank_journal_id = fields.Many2one('account.journal', string='Bank Journal', domain=[('type', '=', 'bank')])
     processing_fee_account_id = fields.Many2one('account.account', string='Processing Fee Account')
     receivable_account_id = fields.Many2one('account.account', string='Receivable Account')
-    stripe_account_id = fields.Many2one('account.account', string='Stripe Account')
+    stripe_receivable_account_id = fields.Many2one('account.account', string='Stripe Account')
 
     def _handle_payout_webhook(self, checkout_object, wh_type):
         if not checkout_object:
@@ -68,7 +68,7 @@ class PaymentAcquirerStripe(models.Model):
             # Debit: Bank account (net amount received)
             (0, 0, {
                 'name': f"Stripe Payout - {description}",
-                'account_id': provider_id.stripe_account_id.id,
+                'account_id': provider_id.stripe_receivable_account_id.id,
                 'debit': 0.0,
                 'credit': payout_amount,
                 'currency_id': currency_id.id,

@@ -8,14 +8,14 @@
             <field name="arch" type="xml">
                 <!-- #if VERSION <= "14.0" -->
                 <field name="move_id" position="after">
-                    <field name="fee_move_id" required="0" attrs="{'invisible': [('id', '=', False)]}" groups="account.group_account_readonly"/>
+                    <field name="fee_move_id" required="0" attrs="{'invisible': [('fee_move_id', '=', False)]}" groups="account.group_account_readonly"/>
                 </field>
                 <!-- #elif VERSION >= "16.0" -->
                 <field name="payment_method_line_id" position="after">
                     <!-- #if VERSION == "16.0" -->
-                    <field name="fee_move_id" required="0" attrs="{'invisible': [('id', '=', False)]}" groups="account.group_account_readonly"/>
+                    <field name="fee_move_id" required="0" attrs="{'invisible': [('fee_move_id', '=', False)]}" groups="account.group_account_readonly"/>
                     <!-- #elif VERSION >= "17.0" -->
-                    <field name="fee_move_id" required="0" invisible="not id" groups="account.group_account_readonly"/>
+                    <field name="fee_move_id" required="0" invisible="not fee_move_id" groups="account.group_account_readonly"/>
                      <!-- #endif -->
                 </field>
                 <!-- #endif -->

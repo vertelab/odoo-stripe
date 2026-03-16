@@ -28,7 +28,7 @@ class AccountStatementImportStripeParser(models.TransientModel):
         except UnicodeDecodeError:
             text = content.decode("latin-1")
 
-        csvfile = io.StringIO(text)
+        csvfile = io.StringIO(text, newline='')
         reader = csv.DictReader(csvfile)
 
         journal = self.env["account.journal"].browse(self.env.context.get("journal_id"))

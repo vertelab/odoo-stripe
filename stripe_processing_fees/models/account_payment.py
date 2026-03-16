@@ -3,20 +3,23 @@ from odoo import models, fields
 
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
-
+    
+    #TODO REMOVE
     fee_move_id = fields.Many2one('account.move', string="Fee Entry")
+    
+    def _generate_move_vals(self, write_off_line_vals=None, force_balance=None, line_ids=None):
+        res = super()._generate_move_vals(
+            write_off_line_vals=write_off_line_vals,
+            force_balance=force_balance,
+            line_ids=line_ids,
+        )
+        if self.payment_method_line_id.payment_provider_id.code == "stripe":
+            lines = self._processing_fee_lines()
+            if lines:
+               res['line_ids'] = lines
+        return res
 
-    def _process_processing_fee(self):
-        processing_fee_move_id = self.env['account.move'].sudo().with_context(check_move_validity=False).create({
-            'move_type': 'entry',
-            'journal_id': self.journal_id.id,
-            'date': fields.Date.today(),
-            'ref': self.move_id.name,
-            'line_ids': self._processing_fee_lines(),
-        })
-
-        self.write({'fee_move_id': processing_fee_move_id.id})
-        processing_fee_move_id.action_post()
+  
 
     def _processing_fee_lines(self):
         balance_transaction = self._get_processing_fee(self._retrieve_balance_transaction_from_charges())
@@ -36,7 +39,7 @@ class AccountPayment(models.Model):
             }),
             (0, 0, {
                 'name': f"{self.payment_transaction_id.reference}",
-                'account_id': payment_transaction_id.provider_id.stripe_account_id.id,
+                'account_id': payment_transaction_id.provider_id.stripe_receivable_account_id.id,
                 'credit': 0.0,
                 'debit': balance_transaction.get('net') / 100,
                 'partner_id':self.partner_id.id,
