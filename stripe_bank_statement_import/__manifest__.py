@@ -10,6 +10,5 @@
         "account_statement_import_online_stripe",
     ],
     "data":[
-           "views/online_bank_statement_provider.xml",
     ]
 }

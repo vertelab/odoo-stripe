@@ -1,6 +1,7 @@
 <odoo>
     <data>
 
+<!--
         <record id="online_bank_statement_provider_form_inherit_invert_amounts"
                 model="ir.ui.view">
             <field name="name">online.bank.statement.provider.form.invert.amounts</field>
@@ -8,7 +9,6 @@
             <field name="inherit_id" ref="account_statement_import_online_stripe.online_bank_statement_provider_form"/>
             <field name="arch" type="xml">
 
-                <!-- Add field inside the 'configuration' group -->
                 <xpath expr="//group[@name='stripe']" position="inside">
                     <field name="invert_amounts_stripe"
                            invisible="service != 'stripe'"/>
@@ -16,6 +16,7 @@
 
             </field>
         </record>
+-->
 
     </data>
 </odoo>
