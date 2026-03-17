@@ -58,12 +58,12 @@ class OnlineBankStatementProvider(models.Model):
                         "ref": safe_format(self.stripe_fee_reference, tx),
                         "payment_ref": safe_format(self.stripe_fee_label, tx),
                         "narration": safe_format(self.stripe_fee_note, tx),
-                        "amount": float(-tx["fee"]) / (10**currency.decimal_places),
+                        "amount": float(tx["fee"]) / (10**currency.decimal_places),
                         "date": datetime.fromtimestamp(tx["created"]),
                         "unique_import_id": tx["id"] + "_fee",
                         "raw_data": json.dumps(tx),
                     }
-               line1['amount'] = line1['amount'] + line2['amount']
+               line1['amount'] = line1['amount'] - line2['amount']
             if line1:
                 lines.append(line1)
             if line2:
