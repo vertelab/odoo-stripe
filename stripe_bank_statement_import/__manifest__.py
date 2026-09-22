@@ -1,4 +1,5 @@
 {
+    'website': 'https://vertel.se/apps/odoo-stripe/stripe_bank_statement_import',
     "name": "Bank Statement Stripe File",
     "summary": "Import Stripe File",
     "version": "18.0.1.0.1",

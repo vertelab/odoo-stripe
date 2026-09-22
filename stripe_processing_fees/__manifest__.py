@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
+    'website': 'https://vertel.se/apps/odoo-stripe/stripe_processing_fees',
     'name': 'Stripe Payment Processing Fee',
     'category': 'Stripe Payment Processing Fee',
     'sequence': 380,
